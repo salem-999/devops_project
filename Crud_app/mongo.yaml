@@ -1,0 +1,25 @@
+version: '3'
+services:
+  node_app:
+    build: NodeJsdocker
+    ports:
+      - 3000:3000
+  angular:
+    build: AngularDocker/AngularApp
+    ports:
+      - 4200:4200
+  mongodb1:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data:/data/db
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb1
+volumes:
+  db-data:
+    driver: local
