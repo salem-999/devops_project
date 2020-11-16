@@ -1,0 +1,51 @@
+version: '3'
+services:
+  node_app:
+    build: NodeJsdocker
+    ports:
+      - 3000:3000
+  angular:
+    build: AngularDocker/AngularApp
+    ports:
+      - 4200:4200
+  mongo1:
+    hostname: mongo1
+    container_name: localmongo1
+    image: mongo:4.0-xenial
+    expose:
+    - 27017
+    ports:
+      - 27017:27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo2:
+    hostname: mongo2
+    container_name: localmongo2
+    image: mongo:4.0-xenial
+    expose:
+    - 27017
+    ports:
+    - 27012:27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo3:
+    hostname: mongo3
+    container_name: localmongo3
+    image: mongo:4.0-xenial
+    expose:
+    - 27017
+    ports:
+    - 27013:27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo1
+
+# volumes:
+#  - /var/run/docker-sock:/var/run/docker:sock:ro
+#  db-data:
+#    driver: local

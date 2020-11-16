@@ -24,10 +24,11 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     var emp = new Employee({
-        name: req.body.name,
-        position: req.body.position,
-        office: req.body.office,
-        salary: req.body.salary,
+      username: req.body.username,
+      fullname: req.body.fullname,
+      birthdate: req.body.birthdate,
+      email: req.body.email,
+      password: req.body.password,
     });
     emp.save((err, doc) => {
         if (!err) { res.send(doc); }
@@ -40,10 +41,11 @@ router.put('/:id', (req, res) => {
         return res.status(400).send(`No record with given id : ${req.params.id}`);
 
     var emp = {
-        name: req.body.name,
-        position: req.body.position,
-        office: req.body.office,
-        salary: req.body.salary,
+      username: req.body.username,
+      fullname: req.body.fullname,
+      birthdate: req.body.birthdate,
+      email: req.body.email,
+      password: req.body.password,
     };
     Employee.findByIdAndUpdate(req.params.id, { $set: emp }, { new: true }, (err, doc) => {
         if (!err) { res.send(doc); }
